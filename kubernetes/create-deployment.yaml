@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-expose
+spec:
+  type: NodePort
+  ports:
+  - name: nginx-http
+    port: 6739
+    targetPort: 80
+    protocol: TCP
+    nodePort: 6739
+selector:
+  app: sample-deployment 
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata: 
+  name: sample-deployment
+spec:
+  selector: 
+    matchLabels:
+      app: sample-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sample-deployment
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - name: nginx-http
+          containerPort: 80
+          protocol: TCP
+        
+      - name: sample-redis
+        image: redis
+        ports: 
+          - name: remote
+            containerPort: 6379
+            protocol: TCP
+

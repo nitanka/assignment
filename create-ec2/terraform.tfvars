@@ -1,0 +1,5 @@
+region = "ap-northeast-1"
+profile = "tokyo"
+key_name = "terrafrom"
+public_key_path = "/home/nitankagogoi/.ssh/id_rsa.pub"
+number_of_instances = "2"
